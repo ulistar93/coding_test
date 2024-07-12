@@ -24,3 +24,6 @@ for case in all_case:
 
 sums.sort()
 print(sums, f"-> {len(sums)}")
+print("---------------------------------")
+print(len(a))
+print(' '.join(str(s) for s in sums))

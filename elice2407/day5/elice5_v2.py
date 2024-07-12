@@ -28,29 +28,40 @@ def main():
         # print(' -> olist :',olist)
         # print('          ----')
         # pdb.set_trace()
-        for i, s in enumerate(ss):
-            if check_list[i]: # 1
+        idx = 2
+        ss_t = ss[idx:]
+        while len(ss_t) > 0:
+            if check_list[idx]:
+                idx += 1
+                ss_t = ss_t[1:]
                 continue
             # print('       ss :',ss)
             # print('check_list:',check_list)
-            # print(f'i({i}) '.rjust(13) + ' '*(3*i) + '^')
+            # print(f'idx({idx}) '.rjust(13) + ' '*(3*idx) + '^')
+            # print('     ss_t :' + ' '*(3*idx), ss_t)
             # pdb.set_trace()
             # add s into xlist
+            s = ss_t[0]
             xlist.append(s)
-            check_list[i] = 1
+            check_list[idx] = 1
             # find s+a
-            o_loc = i + ss[i:].index(s+a)
-            while check_list[o_loc]:
-                o_loc += 1 + ss[o_loc+1:].index(s+a)
-            olist.append(ss[o_loc])
-            check_list[o_loc] = 1
-            # print('       ss :',ss)
+            try:
+                o_loc = 1 + ss_t[1:].index(s+a)
+                while check_list[idx+o_loc]:
+                    o_loc += 1 + ss_t[o_loc+1:].index(s+a)
+            except ValueError:
+                pdb.set_trace()
+            olist.append(ss_t[o_loc])
+            check_list[idx + o_loc] = 1
+            # print('     ss_t :' + ' '*(3*idx), ss_t)
             # print('check_list:',check_list)
-            # print(f'i({i}) '.rjust(13) + ' '*(3*i) + 'x  ' + ' '*(3*(o_loc-i-1)) + 'x')
+            # print(f'idx({idx}) '.rjust(13) + ' '*(3*idx) + 'x  ' + ' '*(3*(o_loc-1)) + 'x')
             # print(' -> xlist :',xlist)
             # print(' -> olist :',olist)
             # print('          ----')
             # pdb.set_trace()
+            idx += 1
+            ss_t = ss_t[1:]
         # print('=================================')
         # print(' * arr(a) :',arr)
         # print(' -> xlist :',xlist)
