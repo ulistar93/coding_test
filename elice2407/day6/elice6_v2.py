@@ -2,6 +2,8 @@
 import itertools
 import time
 
+from collections import Counter
+
 print1 = print
 import pdb
 # print = lambda *args : None # print override
@@ -12,14 +14,14 @@ import pdb
 N = int(input())
 line_colors = list(map(int,input().split()))
 
-print("---------------- find node & edge")
-start = time.time()
 nodes = []
 nodes.append([[1]*N])
 node_slist = []
 node_slist.append(['1'*N])
 edges = {}
-for step in range(1,N-1):
+print("---------------- find node & edge")
+start = time.time()
+for step in range(N-1):
     parent_list = nodes[-1]
     child_list = []
     child_str_list = []
@@ -27,7 +29,12 @@ for step in range(1,N-1):
         # print("nodes    :", nodes)
         # print("parent   :", parent)
         parent_str = ''.join(map(str,parent))
-        combinations = set(itertools.combinations(parent,2))
+        shrinked_parent = list(set(parent))
+        counter = Counter(parent)
+        dup = [o for o, c in counter.items() if c > 1]
+        shrinked_parent += dup
+        combinations = set(itertools.combinations(shrinked_parent, 2))
+        # combinations = set(itertools.combinations(parent,2))
         for (u, v) in combinations:
             child = parent.copy()
             child.remove(u)

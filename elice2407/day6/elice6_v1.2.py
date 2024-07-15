@@ -18,7 +18,9 @@ nodes = []
 nodes.append([[1]*N])
 node_slist = []
 node_slist.append(['1'*N])
-edges = {}
+nodes.append([[2]+[1]*(N-1)])
+node_slist.append(['2'+'1'*(N-1)])
+edges = {node_slist[-1][0]+'->'+node_slist[-2][0]:1}
 for step in range(1,N-1):
     parent_list = nodes[-1]
     child_list = []
